@@ -10,7 +10,7 @@ import (
 
 func New(logPath, logName string) (*logrus.Logger, error) {
 	log := logrus.New()
-	log.SetReportCaller(true)
+	log.SetReportCaller(false)
 
 	r, err := rotatelogs.New(
 		logName+".%Y%m%d%H",

@@ -13,10 +13,14 @@ import (
 
 	per "porn/common/persistence"
 	"porn/library/persistence"
+
+	ema "porn/common/email"
+	"porn/library/email"
 )
 
 func init() {
 	var err error
+
 	log.Logger, err = logger.New("./", "logger")
 	if err != nil {
 		panic(fmt.Sprintf("common.init logger.New error:%v", err))
@@ -37,5 +41,18 @@ func init() {
 		panic(fmt.Sprintf("common.init persistence.ConnectDbMySql error:%v", err))
 	}
 
-	log.Logger.Infof("[CONF]%+v", *cfg.Config)
+	ema.Email, err = email.New(
+		cfg.Config.Email.Name,
+		cfg.Config.Email.SmtpHost,
+		cfg.Config.Email.SmtpPort,
+		cfg.Config.Email.SmtpUser,
+		cfg.Config.Email.SmtpPswd,
+		cfg.Config.Email.Count,
+		log.Logger,
+	)
+	if err != nil {
+		panic(fmt.Sprintf("common.init email.New error:%v", err))
+	}
+
+	log.Logger.WithField("conf", *cfg.Config).Infoln("Setup")
 }

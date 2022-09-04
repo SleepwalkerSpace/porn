@@ -14,4 +14,12 @@ type Cfg struct {
 	Mysql struct {
 		Dsn string
 	}
+	Email struct {
+		Name     string
+		SmtpHost string
+		SmtpPort int
+		SmtpUser string
+		SmtpPswd string
+		Count    int
+	}
 }

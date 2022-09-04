@@ -1,8 +1,6 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
 
@@ -13,7 +11,6 @@ func Load(cfgPath, cfgName, cfgtype string, config interface{}) error {
 	imp.SetConfigName(cfgName)
 	imp.SetConfigType(cfgtype)
 	imp.ReadInConfig()
-	fmt.Println(imp.AllKeys())
 	if err := imp.Unmarshal(config); err != nil {
 		return err
 	}

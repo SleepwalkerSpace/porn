@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
 	_ "porn/common"
-	"porn/common/config"
-	"porn/common/logger"
-	"porn/server/app/admin"
+	"porn/common/email"
+	"time"
 )
 
 func main() {
-	r := admin.NewRouter(logger.Logger)
-	r.Run(fmt.Sprintf("%v:%v", config.Config.Server.Host, config.Config.Server.Port))
+	email.Email.Send("TEST", "TEST", "", "410520827@qq.com")
+	time.Sleep(time.Hour)
 }

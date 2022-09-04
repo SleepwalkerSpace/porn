@@ -7,4 +7,12 @@ Addr = "192.168.1.49:6379"
 Pswd = ""
 
 [Mysql]
-Dsn = "root:123456@tcp(192.168.1.49:3306)/porn?charset=utf8mb4&parseTime=True&loc=Local"
+Dsn = "root:123456@tcp(192.168.1.49:3306)/db_porn?charset=utf8mb4&parseTime=True&loc=Local"
+
+[Email]
+Name = "PRON"
+SmtpHost = "127.0.0.1"
+SmtpPort = "1025"
+SmtpUser = "sleepwalkerspace@proton.me"
+SmtpPswd = "s__yuOWItvQFu18Ii4x_xw"
+Count = 3

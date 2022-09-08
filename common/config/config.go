@@ -1,5 +1,7 @@
 package config
 
+import "fmt"
+
 var Config *Cfg
 
 type Cfg struct {
@@ -22,4 +24,8 @@ type Cfg struct {
 		SmtpPswd string
 		Count    int
 	}
+}
+
+func (cfg Cfg) ServerAddress() string {
+	return fmt.Sprintf("%s:%v", cfg.Server.Host, cfg.Server.Port)
 }

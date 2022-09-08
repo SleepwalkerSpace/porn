@@ -2,11 +2,14 @@ package main
 
 import (
 	_ "porn/common"
-	"porn/common/email"
-	"time"
+	"porn/common/config"
+	"porn/common/logger"
+	"porn/server/app/admin"
 )
 
 func main() {
-	email.Email.Send("TEST", "TEST", "", "410520827@qq.com")
-	time.Sleep(time.Hour)
+	server := admin.NewRouter(logger.Logger)
+	if err := server.Run(config.Config.ServerAddress()); err != nil {
+		panic(err)
+	}
 }

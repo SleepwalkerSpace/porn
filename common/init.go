@@ -36,7 +36,7 @@ func init() {
 		panic(fmt.Sprintf("common.init cache.Connect error:%v", err))
 	}
 
-	per.Persistence, err = persistence.ConnectDbMySql(cfg.Config.Mysql.Dsn)
+	per.DB, err = persistence.ConnectDbMySql(cfg.Config.Mysql.Dsn)
 	if err != nil {
 		panic(fmt.Sprintf("common.init persistence.ConnectDbMySql error:%v", err))
 	}

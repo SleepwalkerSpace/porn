@@ -59,9 +59,9 @@ func (obj *_TbTagMgr) WithID(id int) Option {
 	return optionFunc(func(o *options) { o.query["id"] = id })
 }
 
-// WithNamed named获取
-func (obj *_TbTagMgr) WithNamed(named string) Option {
-	return optionFunc(func(o *options) { o.query["named"] = named })
+// WithTitel titel获取
+func (obj *_TbTagMgr) WithTitel(titel string) Option {
+	return optionFunc(func(o *options) { o.query["titel"] = titel })
 }
 
 // WithCover cover获取
@@ -136,16 +136,16 @@ func (obj *_TbTagMgr) GetBatchFromID(ids []int) (results []*TbTag, err error) {
 	return
 }
 
-// GetFromNamed 通过named获取内容
-func (obj *_TbTagMgr) GetFromNamed(named string) (results []*TbTag, err error) {
-	err = obj.DB.WithContext(obj.ctx).Model(TbTag{}).Where("`named` = ?", named).Find(&results).Error
+// GetFromTitel 通过titel获取内容
+func (obj *_TbTagMgr) GetFromTitel(titel string) (results []*TbTag, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(TbTag{}).Where("`titel` = ?", titel).Find(&results).Error
 
 	return
 }
 
-// GetBatchFromNamed 批量查找
-func (obj *_TbTagMgr) GetBatchFromNamed(nameds []string) (results []*TbTag, err error) {
-	err = obj.DB.WithContext(obj.ctx).Model(TbTag{}).Where("`named` IN (?)", nameds).Find(&results).Error
+// GetBatchFromTitel 批量查找
+func (obj *_TbTagMgr) GetBatchFromTitel(titels []string) (results []*TbTag, err error) {
+	err = obj.DB.WithContext(obj.ctx).Model(TbTag{}).Where("`titel` IN (?)", titels).Find(&results).Error
 
 	return
 }

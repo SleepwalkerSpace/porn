@@ -3,7 +3,7 @@ package model
 // TbTag [...]
 type TbTag struct {
 	ID    int    `gorm:"primaryKey;column:id" json:"id"`
-	Named string `gorm:"column:named" json:"named"`
+	Titel string `gorm:"column:titel" json:"titel"`
 	Cover string `gorm:"column:cover" json:"cover"`
 }
 
@@ -15,10 +15,10 @@ func (m *TbTag) TableName() string {
 // TbTagColumns get sql column name.获取数据库列名
 var TbTagColumns = struct {
 	ID    string
-	Named string
+	Titel string
 	Cover string
 }{
 	ID:    "id",
-	Named: "named",
+	Titel: "titel",
 	Cover: "cover",
 }

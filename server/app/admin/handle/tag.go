@@ -17,8 +17,8 @@ type TagInfo struct {
 	Count int    `json:"count"`
 }
 type TagListData struct {
-	TagInfos []TagInfo `json:"infos"`
-	Total    int64     `json:"total"`
+	Infos []TagInfo `json:"infos"`
+	Total int64     `json:"total"`
 }
 
 func TagList(c *gin.Context) {
@@ -31,7 +31,7 @@ func TagList(c *gin.Context) {
 		ORDER BY count DESC;
 		`
 	var data TagListData
-	if err := persistence.DB.Raw(sql).Scan(&data.TagInfos).Error; err != nil {
+	if err := persistence.DB.Raw(sql).Scan(&data.Infos).Error; err != nil {
 		c.JSON(http.StatusOK, httpenc.MakeFailHTTPRespPackage(httpenc.HTTPRespCode_ParamIllegal))
 		return
 	}
@@ -53,8 +53,8 @@ func TagCreate(c *gin.Context) {
 		c.JSON(http.StatusOK, httpenc.MakeFailHTTPRespPackage(httpenc.HTTPRespCode_ParamUnmarshal))
 		return
 	}
-	tbTagMgr := model.TbTagMgr(persistence.DB)
-	if _, err := tbTagMgr.GetByOption(tbTagMgr.WithTitel(param.Title)); err == gorm.ErrRecordNotFound {
+	mgr := model.TbTagMgr(persistence.DB)
+	if _, err := mgr.GetByOption(mgr.WithTitel(param.Title)); err == gorm.ErrRecordNotFound {
 		c.JSON(http.StatusOK, httpenc.MakeFailHTTPRespPackage(httpenc.HTTPRespCode_Repeated))
 		return
 	} else if err != nil && err != gorm.ErrRecordNotFound {
@@ -62,8 +62,8 @@ func TagCreate(c *gin.Context) {
 		return
 	}
 
-	tag := model.TbTag{Titel: param.Title, Cover: param.Cover}
-	if err := tbTagMgr.Create(&tag).Error; err != nil {
+	val := model.TbTag{Titel: param.Title, Cover: param.Cover}
+	if err := mgr.Create(&val).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, nil)
 		return
 	}

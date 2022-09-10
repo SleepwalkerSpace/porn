@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"porn/common/httpenc"
 	"porn/common/persistence"
+	"porn/common/sqlenc"
 	"porn/model"
 
 	"github.com/gin-gonic/gin"
@@ -41,11 +42,11 @@ func ActorList(c *gin.Context) {
 	var sql string
 	switch param.SortType {
 	case 0, 1:
-		sql = ``
+		sql = sqlenc.ActorListByMovieCount(limit, offset)
 	case 2:
-		sql = ``
+		sql = sqlenc.ActorListByMovieView(limit, offset)
 	case 3:
-		sql = ``
+		sql = sqlenc.ActorListByMovieFavorite(limit, offset)
 	}
 	if err := persistence.DB.Raw(sql, limit, offset).Scan(&data.Infos).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, nil)

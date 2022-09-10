@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"porn/common/httpenc"
 	"porn/common/persistence"
+	"porn/common/sqlenc"
 	"porn/model"
 
 	"github.com/gin-gonic/gin"
@@ -22,16 +23,9 @@ type TagListData struct {
 }
 
 func TagList(c *gin.Context) {
-	sql :=
-		`
-		SELECT tb_tag.id, tb_tag.named, tb_tag.cover, COUNT(*) AS count 
-		FROM tb_tag, tb_movie_tag 
-		WHERE tb_tag.id = tb_movie_tag.tag_id 
-		GROUP BY tb_tag.id 
-		ORDER BY count DESC;
-		`
+
 	var data TagListData
-	if err := persistence.DB.Raw(sql).Scan(&data.Infos).Error; err != nil {
+	if err := persistence.DB.Raw(sqlenc.TagListSql()).Scan(&data.Infos).Error; err != nil {
 		c.JSON(http.StatusOK, httpenc.MakeFailHTTPRespPackage(httpenc.HTTPRespCode_ParamIllegal))
 		return
 	}

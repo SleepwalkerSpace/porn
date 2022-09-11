@@ -30,7 +30,10 @@ func NewRouter(logger *logrus.Logger) *gin.Engine {
 			}
 			actor := v1.Group("/actor")
 			{
-				actor.Any("/")
+				actor.GET("", handle.ActorList)
+				actor.POST("", handle.ActorCreate)
+				actor.PUT("", handle.ActorUpdate)
+				actor.DELETE("", handle.ActorDelete)
 			}
 			tag := v1.Group("/tag")
 			{
@@ -39,6 +42,12 @@ func NewRouter(logger *logrus.Logger) *gin.Engine {
 				tag.PUT("", handle.TagUpdate)
 				tag.DELETE("", handle.TagDelete)
 			}
+
+			upload := v1.Group("/upload")
+			{
+				upload.POST("", handle.Upload)
+			}
+
 		}
 	}
 

@@ -1,6 +1,7 @@
 package handle
 
 import (
+	"fmt"
 	"net/http"
 	"porn/common/httpenc"
 	"porn/common/persistence"
@@ -118,6 +119,11 @@ func TagDelete(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, nil)
 			return
 		}
+	}
+
+	if err := model.TbMovieTagMgr(persistence.DB).Delete(&model.TbMovieTag{}, fmt.Sprintf("%s = ?", model.TbMovieTagColumns.TagID), val.ID).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, nil)
+		return
 	}
 
 	if err := mgr.Delete(&val).Error; err != nil {
